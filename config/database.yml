@@ -1,4 +1,4 @@
-<% project_name = 'capstone-api' %>
+<% project_name = 'capstone-game-api' %>
 
 default: &default
   adapter: postgresql
