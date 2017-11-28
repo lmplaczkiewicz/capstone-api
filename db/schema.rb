@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128143300) do
+ActiveRecord::Schema.define(version: 20171128161908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,9 +20,12 @@ ActiveRecord::Schema.define(version: 20171128143300) do
     t.integer "xp"
     t.integer "armor"
     t.integer "health"
-    t.string "playerClass"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "player_class_id"
+    t.index ["player_class_id"], name: "index_characters_on_player_class_id"
+    t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
   create_table "examples", force: :cascade do |t|
@@ -31,6 +34,18 @@ ActiveRecord::Schema.define(version: 20171128143300) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_examples_on_user_id"
+  end
+
+  create_table "player_classes", force: :cascade do |t|
+    t.string "name"
+    t.integer "str"
+    t.integer "dex"
+    t.integer "con"
+    t.integer "wis"
+    t.integer "int"
+    t.integer "cha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "quests", force: :cascade do |t|
@@ -51,5 +66,7 @@ ActiveRecord::Schema.define(version: 20171128143300) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  add_foreign_key "characters", "player_classes"
+  add_foreign_key "characters", "users"
   add_foreign_key "examples", "users"
 end

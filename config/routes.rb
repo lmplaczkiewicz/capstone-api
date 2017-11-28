@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :player_classes
   resources :quests
   resources :characters
   resources :examples, except: %i[new edit]
