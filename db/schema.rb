@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128190127) do
+ActiveRecord::Schema.define(version: 20171129165321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20171128190127) do
     t.index ["user_id"], name: "index_examples_on_user_id"
   end
 
+  create_table "monsters", force: :cascade do |t|
+    t.string "name"
+    t.integer "health"
+    t.integer "armor"
+    t.integer "xp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "player_class_id"
+    t.index ["player_class_id"], name: "index_monsters_on_player_class_id"
+  end
+
   create_table "player_classes", force: :cascade do |t|
     t.string "name"
     t.integer "str"
@@ -48,6 +59,15 @@ ActiveRecord::Schema.define(version: 20171128190127) do
     t.integer "cha"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "quest_monsters", force: :cascade do |t|
+    t.bigint "quest_id"
+    t.bigint "monster_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["monster_id"], name: "index_quest_monsters_on_monster_id"
+    t.index ["quest_id"], name: "index_quest_monsters_on_quest_id"
   end
 
   create_table "quests", force: :cascade do |t|
@@ -71,4 +91,7 @@ ActiveRecord::Schema.define(version: 20171128190127) do
   add_foreign_key "characters", "player_classes"
   add_foreign_key "characters", "users"
   add_foreign_key "examples", "users"
+  add_foreign_key "monsters", "player_classes"
+  add_foreign_key "quest_monsters", "monsters"
+  add_foreign_key "quest_monsters", "quests"
 end
