@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129165321) do
+ActiveRecord::Schema.define(version: 20171129235949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +26,10 @@ ActiveRecord::Schema.define(version: 20171129165321) do
     t.bigint "player_class_id"
     t.integer "renown"
     t.integer "currency"
+    t.bigint "weapon_id"
     t.index ["player_class_id"], name: "index_characters_on_player_class_id"
     t.index ["user_id"], name: "index_characters_on_user_id"
+    t.index ["weapon_id"], name: "index_characters_on_weapon_id"
   end
 
   create_table "examples", force: :cascade do |t|
@@ -88,8 +90,17 @@ ActiveRecord::Schema.define(version: 20171129165321) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  create_table "weapons", force: :cascade do |t|
+    t.string "name"
+    t.integer "dice"
+    t.integer "sides"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "characters", "player_classes"
   add_foreign_key "characters", "users"
+  add_foreign_key "characters", "weapons"
   add_foreign_key "examples", "users"
   add_foreign_key "monsters", "player_classes"
   add_foreign_key "quest_monsters", "monsters"

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :weapons
   resources :quest_monsters
   resources :monsters
   resources :player_classes
