@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171129235949) do
+ActiveRecord::Schema.define(version: 20171130141217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,7 +48,9 @@ ActiveRecord::Schema.define(version: 20171129235949) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "player_class_id"
+    t.bigint "weapon_id"
     t.index ["player_class_id"], name: "index_monsters_on_player_class_id"
+    t.index ["weapon_id"], name: "index_monsters_on_weapon_id"
   end
 
   create_table "player_classes", force: :cascade do |t|
@@ -103,6 +105,7 @@ ActiveRecord::Schema.define(version: 20171129235949) do
   add_foreign_key "characters", "weapons"
   add_foreign_key "examples", "users"
   add_foreign_key "monsters", "player_classes"
+  add_foreign_key "monsters", "weapons"
   add_foreign_key "quest_monsters", "monsters"
   add_foreign_key "quest_monsters", "quests"
 end
