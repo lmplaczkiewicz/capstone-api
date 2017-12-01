@@ -1,9 +1,9 @@
-class QuestMonstersController < ProtectedController
+class QuestMonstersController < ApplicationController
   before_action :set_quest_monster, only: [:show, :update, :destroy]
 
   # GET /quest_monsters
   def index
-    @quest_monsters = current_user.quest_monsters
+    @quest_monsters = QuestMonster.all
 
     render json: @quest_monsters
   end
@@ -15,7 +15,7 @@ class QuestMonstersController < ProtectedController
 
   # POST /quest_monsters
   def create
-    @quest_monster = current_user.quest_monsters.build(quest_monster_params)
+    @quest_monster = QuestMonster.new(quest_monster_params)
 
     if @quest_monster.save
       render json: @quest_monster, status: :created, location: @quest_monster
@@ -41,7 +41,7 @@ class QuestMonstersController < ProtectedController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quest_monster
-      @quest_monster = current_user.quest_monsters.find(params[:id])
+      @quest_monster = QuestMonster.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
