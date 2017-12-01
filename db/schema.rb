@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171130141217) do
+ActiveRecord::Schema.define(version: 20171201120758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20171130141217) do
     t.integer "renown"
     t.integer "currency"
     t.bigint "weapon_id"
+    t.integer "level"
     t.index ["player_class_id"], name: "index_characters_on_player_class_id"
     t.index ["user_id"], name: "index_characters_on_user_id"
     t.index ["weapon_id"], name: "index_characters_on_weapon_id"
