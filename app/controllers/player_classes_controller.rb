@@ -1,9 +1,9 @@
-class PlayerClassesController < ApplicationController
+class PlayerClassesController < ProtectedController
   before_action :set_player_class, only: [:show, :update, :destroy]
 
   # GET /player_classes
   def index
-    @player_classes = PlayerClass.all
+    @player_classes = current_user.player_classes.order(:name)
 
     render json: @player_classes
   end
@@ -15,7 +15,7 @@ class PlayerClassesController < ApplicationController
 
   # POST /player_classes
   def create
-    @player_class = PlayerClass.new(player_class_params)
+    @player_class = current_user.player_classes.build(player_class_params)
 
     if @player_class.save
       render json: @player_class, status: :created, location: @player_class
@@ -41,7 +41,7 @@ class PlayerClassesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_player_class
-      @player_class = PlayerClass.find(params[:id])
+      @player_class = current_user.player_classes.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

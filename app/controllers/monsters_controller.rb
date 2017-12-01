@@ -1,9 +1,9 @@
-class MonstersController < ApplicationController
+class MonstersController < ProtectedController
   before_action :set_monster, only: [:show, :update, :destroy]
 
   # GET /monsters
   def index
-    @monsters = Monster.all
+    @monsters = current_user.monsters.order(:name)
 
     render json: @monsters
   end
@@ -15,7 +15,7 @@ class MonstersController < ApplicationController
 
   # POST /monsters
   def create
-    @monster = Monster.new(monster_params)
+    @monster = current_user.monsters.build(monster_params)
 
     if @monster.save
       render json: @monster, status: :created, location: @monster
@@ -41,7 +41,7 @@ class MonstersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_monster
-      @monster = Monster.find(params[:id])
+      @monster = current_user.monsters.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

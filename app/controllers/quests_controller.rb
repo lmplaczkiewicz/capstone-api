@@ -1,9 +1,9 @@
-class QuestsController < ApplicationController
+class QuestsController < ProtectedController
   before_action :set_quest, only: [:show, :update, :destroy]
 
   # GET /quests
   def index
-    @quests = Quest.all
+    @quests = current_user.quests
 
     render json: @quests
   end
@@ -15,7 +15,7 @@ class QuestsController < ApplicationController
 
   # POST /quests
   def create
-    @quest = Quest.new(quest_params)
+    @quest = current_user.quests.build(quest_params)
 
     if @quest.save
       render json: @quest, status: :created, location: @quest
@@ -41,7 +41,7 @@ class QuestsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quest
-      @quest = Quest.find(params[:id])
+      @quest = current_user.quests.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

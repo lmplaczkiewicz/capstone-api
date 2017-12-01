@@ -1,9 +1,9 @@
-class WeaponsController < ApplicationController
+class WeaponsController < ProtectedController
   before_action :set_weapon, only: [:show, :update, :destroy]
 
   # GET /weapons
   def index
-    @weapons = Weapon.all
+    @weapons = current_user.weapons.order(:name)
 
     render json: @weapons
   end
@@ -15,7 +15,7 @@ class WeaponsController < ApplicationController
 
   # POST /weapons
   def create
-    @weapon = Weapon.new(weapon_params)
+    @weapon = current_user.weapons.build(weapon_params)
 
     if @weapon.save
       render json: @weapon, status: :created, location: @weapon
@@ -41,7 +41,7 @@ class WeaponsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_weapon
-      @weapon = Weapon.find(params[:id])
+      @weapon = current_user.weapons.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
